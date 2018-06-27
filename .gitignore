@@ -11,7 +11,7 @@
 .mtj.tmp/
 
 # Eclipse Target Folder
-target/
+target/*
 
 # Package Files #
 !maven-wrapper.jar
