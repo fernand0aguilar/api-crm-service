@@ -6,7 +6,7 @@ import javax.persistence.*;
 import io.theam.crmservice.api.enums.ProfileEnum;
 
 @Entity
-@Table (name = "user")
+@Table (name = "users")
 public class User implements Serializable{
 	
 	private static final long serialVersionUID = -3589435415041349797L;
@@ -24,6 +24,8 @@ public class User implements Serializable{
 	private Date updateDate;
 	private Shop shop;
 	private User father;
+	
+	//TODO -> setup get_father_id()
 	
 	public User() {
 		

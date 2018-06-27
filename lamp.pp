@@ -20,6 +20,10 @@ package { "php5":
 require => Exec["apt-update"],
 ensure => installed,
 }
+package { "phpmyadmin":
+require => Exec["apt-update"],
+ensure => installed,
+}
 
 file { "/var/www/html/info.php":
 ensure => file,
