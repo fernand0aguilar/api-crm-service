@@ -10,6 +10,9 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+# Eclipse Target Folder
+target/
+
 # Package Files #
 !maven-wrapper.jar
 *.jar
