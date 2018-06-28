@@ -1,6 +1,9 @@
 language: java
 jdk:
         - oraclejdk8
+
+before_install:
+          - mysql -e 'CREATE DATABASE crm_service_db;'
 install:
         - mvn -N io.takari:maven:wrapper
         - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
