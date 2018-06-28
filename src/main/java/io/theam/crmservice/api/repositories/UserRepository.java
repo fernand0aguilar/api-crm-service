@@ -5,7 +5,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import io.theam.crmservice.api.entities.User;
 
+@Transactional(readOnly = true)
 public interface UserRepository extends JpaRepository<User, Long>{
-	@Transactional(readOnly = true)
+	
 	User findByName(String name);
+	
+	User findBySurname(String surname);
+	
+	User findByEmail(String email);
+
+	User findByNameOrEmail(String name, String email);
 }
