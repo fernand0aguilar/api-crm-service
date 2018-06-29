@@ -23,17 +23,18 @@ import io.theam.crmservice.api.utils.PasswordUtils;
 @SpringBootTest
 @ActiveProfiles("test")
 public class UserRepositoryTest {
+	
+	private static final String name = "John";
+	private static final String surname = "Doe";
+	private static final String email = "john@doe.com";
+
 
 	@Autowired
 	private UserRepository userRepository;
 	
 	@Autowired
-	private ShopRepository shopRepository;
-	
-	private static final String name = "John";
-	private static final String surname = "Doe";
-	private static final String email = "john@doe.com";
-	
+	private ShopRepository shopRepository;	
+		
 	@Before
 	public void setUp() throws Exception {
 		Shop shop = this.shopRepository.save(getShopData());

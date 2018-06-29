@@ -34,14 +34,14 @@ public class UserServiceImpl implements UserService {
 		log.info("Searching user by email: {}", email);
 		return Optional.ofNullable(this.userRepository.findByEmail(email));
 	}
-	
-	/*public Optional<User> searchById(Long id){
+
+	public Optional<User> searchById(Long id) {
 		log.info("Searching user by id: {}", id);
-		//TODO -> DoubleCheck findOne method
-		// return Optional.ofNullable(this.userRepository.findOne(id));
-	}*/
+		return Optional.ofNullable(this.userRepository.findById(id).orElse(null));
+	}
+
 	public List<User> searchAll() {
 		log.info("Searching all users");
 		return userRepository.findAll();
-	 }
+	}
 }
