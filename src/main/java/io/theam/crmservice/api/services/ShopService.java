@@ -7,10 +7,10 @@ import io.theam.crmservice.api.entities.Shop;
 public interface ShopService {
 	/**
 	 * Return a shop given the name
+	 * 
 	 * @param shopName
 	 * @return Optional<Shop>
 	 */
-	
 	Optional<Shop> searchByShopName(String shopName);
 	
 	/**
