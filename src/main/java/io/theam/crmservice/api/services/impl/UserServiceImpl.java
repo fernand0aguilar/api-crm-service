@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
 
 	public Optional<User> searchById(Long id) {
 		log.info("Searching user by id: {}", id);
-		return Optional.ofNullable(this.userRepository.findById(id).orElse(null));
+		return this.userRepository.findById(id);
 	}
 
 	public List<User> searchAll() {
