@@ -37,7 +37,7 @@ public class UserServiceTest {
 	@Before
 	public void setUp() throws Exception {
 		BDDMockito.given(this.userRepository.save(Mockito.any(User.class))).willReturn(new User());
-		//BDDMockito.given(this.userRepository.findById(Mockito.anyLong()).get()).willReturn(new User());
+		BDDMockito.given(this.userRepository.findById(Mockito.anyLong())).willReturn(Optional.of(new User()));
 		BDDMockito.given(this.userRepository.findByName(Mockito.anyString())).willReturn(new User());
 		BDDMockito.given(this.userRepository.findByEmail(Mockito.anyString())).willReturn(new User());
 	}
@@ -48,11 +48,11 @@ public class UserServiceTest {
 		assertNotNull(user);
 	}
 	
-//	@Test TODO --> FIX this
-//	public void testSearchUserById() {
-//		Optional<User> user = this.userService.searchById(1L);
-//		assertTrue(user.isPresent());
-//	}
+	@Test 
+	public void testSearchUserById() {
+		Optional<User> user = this.userService.searchById(1L);
+		assertTrue(user.isPresent());
+	}
 	
 	@Test
 	public void testSearchUserByEmail() {
