@@ -10,7 +10,7 @@ public class RegisterShopDto {
 	
 	// Shop Owner Informations
 	private String userName;
-	private String surName;
+	private String surname;
 	private String password;
 	private String email;
 	// Shop Information
@@ -39,10 +39,10 @@ public class RegisterShopDto {
 	@NotEmpty(message = "Surname cannot be empty.")
 	@Length(min = 3, max = 30, message = "Surname needs minimun 3 and maximun 30 characteres")
 	public String getSurname() {
-		return surName;
+		return surname;
 	}
 	public void setSurname(String surname) {
-		this.surName = surname;
+		this.surname = surname;
 	}
 	
 	@NotEmpty(message = "Password cannot be empty.")
@@ -76,7 +76,7 @@ public class RegisterShopDto {
 
 	@Override
 	public String toString() {
-		return "RegisterShopDto [id=" + id + ", UserName=" + userName + ", surname=" + surName + ", password="
+		return "RegisterShopDto [id=" + id + ", UserName=" + userName + ", surname=" + surname + ", password="
 				+ password + ", email=" + email + ", shopName=" + shopName + "]";
 	}
 	
