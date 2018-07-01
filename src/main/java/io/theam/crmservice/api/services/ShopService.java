@@ -20,4 +20,12 @@ public interface ShopService {
 	 * @return Optional<Shop>
 	 */
 	Optional<Shop> searchByShopName(String shopName);
+	
+	/**
+	 * Return a shop given the id
+	 * 
+	 * @param shopName
+	 * @return Optional<Shop>
+	 */
+	Optional<Shop> searchById(Long id);
 }
