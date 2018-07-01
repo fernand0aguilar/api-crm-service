@@ -4,7 +4,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
 
-public class RegisterShopDto {
+public class RegisterNewShopDto {
 
 	private Long id;
 	
@@ -16,7 +16,7 @@ public class RegisterShopDto {
 	// Shop Information
 	private String shopName;
 
-	public RegisterShopDto() {
+	public RegisterNewShopDto() {
 		
 	}
 	
