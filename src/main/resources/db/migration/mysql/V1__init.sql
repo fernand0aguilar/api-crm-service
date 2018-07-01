@@ -1,12 +1,12 @@
 CREATE TABLE `shop` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL **AUTO_INCREMENT**,  
   `shop_name` varchar(255) NOT NULL,
   `create_date` datetime NOT NULL,
   `update_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `users` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL **AUTO_INCREMENT**,
   `name` varchar(255) NOT NULL,
   `surname` varchar(255) NOT NULL,
   `create_date` datetime NOT NULL,
