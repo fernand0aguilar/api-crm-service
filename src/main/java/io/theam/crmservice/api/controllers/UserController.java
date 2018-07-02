@@ -81,6 +81,9 @@ public class UserController {
 		return ResponseEntity.ok(response);
 
 	}
+	
+	
+	
 	/**
 	 * Update the user data based on data found on DTO.
 	 * 

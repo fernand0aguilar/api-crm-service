@@ -14,8 +14,6 @@ public class RegisterNewShopDto {
 	private String password;
 	private String email;
 	//TODO -> Insert picture field
-
-	// Shop Information
 	private String shopName;
 
 	public RegisterNewShopDto() {

@@ -12,6 +12,11 @@
 
 # Eclipse Target Folder
 target/*
+*/target/*
+*/target/**
+
+#Vagrant
+.vagrant/
 
 # Package Files #
 !maven-wrapper.jar
