@@ -13,7 +13,7 @@ public class UserDto {
 	private String name;
 	private String surname;
 	private String email;
-	private Optional<String> password = Optional.empty();
+	private Optional<String> password;
 	private Long father_id;
 	//TODO -> Insert picture field
 	//TODO -> Create father logic
@@ -58,7 +58,6 @@ public class UserDto {
 		this.email = email;
 	}
 	
-	@NotEmpty(message = "Password cannot be empty.")
 	public Optional<String> getPassword() {
 		return password;
 	}

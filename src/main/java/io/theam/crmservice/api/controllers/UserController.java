@@ -41,6 +41,9 @@ public class UserController {
 		
 	}
 	
+	//TODO -> WRITE METHODS CREATE, READ, DELETE
+	
+	
 	/**
 	 * Update the User data
 	 * 
@@ -50,7 +53,7 @@ public class UserController {
 	 * @return ResponseEntity<Response<UserDto>>
 	 * @throws NoSuchAlgorithmException
 	 */
-	@PutMapping(value = "/{id}")
+	@PutMapping(value = "/update-user/{id}")
 	public ResponseEntity<Response<UserDto>> update(@PathVariable("id") Long id,
 			@Valid @RequestBody UserDto userDto, 
 			BindingResult result) throws NoSuchAlgorithmException{
