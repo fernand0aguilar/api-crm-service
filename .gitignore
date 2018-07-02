@@ -12,8 +12,6 @@
 
 # Eclipse Target Folder
 target/*
-*/target/*
-*/target/**
 
 #Vagrant
 .vagrant/

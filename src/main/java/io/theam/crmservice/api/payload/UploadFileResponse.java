@@ -1,6 +1,7 @@
-package io.theam.crmservice.api.payload;
+// TODO MOVE THIS TO A DTO
+// TODO Encapsulate the return to a Response
 
-import io.theam.crmservice.api.entities.User;
+package io.theam.crmservice.api.payload;
 
 public class UploadFileResponse {
     private String fileName;
