@@ -18,17 +18,22 @@ public class ShopServiceImpl implements ShopService {
 	
 	@Autowired
 	private ShopRepository shopRepository;
-	
-	@Override
-	public Optional<Shop> searchByShopName(String shopName){
-		log.info("Search a shop for the name {}", shopName);
-		return Optional.ofNullable(shopRepository.findByShopName(shopName));
-	}
 
 	@Override
 	public Shop persist(Shop shop) {
 		log.info("Persisting shop: {}", shop);
 		return this.shopRepository.save(shop);
+	}
+
+	@Override
+	public Optional<Shop> searchByShopName(String shopName){
+		log.info("Search a shop for the name {}", shopName);
+		return Optional.ofNullable(shopRepository.findByShopName(shopName));
+	}
+	@Override
+	public Optional<Shop> searchById(Long id) {
+		log.info("Search a shop for the id {}", id);
+		return this.shopRepository.findById(id);
 	}
 			
 }

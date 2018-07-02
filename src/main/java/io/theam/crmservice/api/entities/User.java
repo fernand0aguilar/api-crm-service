@@ -2,7 +2,22 @@ package io.theam.crmservice.api.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Table;
+
 import io.theam.crmservice.api.enums.ProfileEnum;
 
 @Entity
@@ -12,21 +27,24 @@ public class User implements Serializable{
 	private static final long serialVersionUID = -3589435415041349797L;
 	
 	private Long id;
+	    
 	private String name;
 	private String surname;
-	//	private TODO --> FILE UPLOAD 
-	// https://javatutorial.net/java-file-upload-rest-service
 	private String email;
 	private String password;
+	
+	// private TODO --> FILE UPLOAD 
+	// https://javatutorial.net/java-file-upload-rest-service
 	
 	private ProfileEnum profile;
 	private Date createDate;
 	private Date updateDate;
 	private Shop shop;
-	private User father;
 	
-	//TODO -> setup get_father_id()
+	private User parent;	
+    private List<User> children;
 	
+
 	public User() {
 		
 	}
@@ -107,11 +125,19 @@ public class User implements Serializable{
 	}
 	
 	@ManyToOne(fetch = FetchType.EAGER)
-	public User getFather() {
-		return father;
+	public User getParent() {
+		return parent;
 	}
-	public void setFather(User father) {
-		this.father = father;
+	public void setParent(User parent) {
+		this.parent = parent;
+	}
+	
+	@OneToMany(mappedBy="parent")
+	public List<User> getChildren() {
+		return children;
+	}
+	public void setChildren(List<User> children) {
+		this.children = children;
 	}
 	
 	@PreUpdate
@@ -136,6 +162,6 @@ public class User implements Serializable{
 				+ ", email=" + email + ", password=" + password 
 				+ ", profile=" + profile + ", createDate=" + createDate 
 				+ ", updateDate=" + updateDate + ", shop=" + shop 
-				+ ", father=" + father + "]";
+				+ ", parent=" + parent + "]";
 	}
 }

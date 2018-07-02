@@ -2,6 +2,7 @@ exec { "apt-update":
 command => "/usr/bin/apt-get update"
 }
 
+
 package { "apache2":
 require => Exec["apt-update"],
 ensure => installed,
@@ -25,8 +26,18 @@ require => Exec["apt-update"],
 ensure => installed,
 }
 
-file { "/var/www/html/info.php":
-ensure => file,
-content => "<?php phpinfo(); ?>",
-require => Package["apache2"],
+package { "default-jre":
+require => Exec["apt-update"],
+ensure => installed,
 }
+
+package { "default-jdk":
+require => Exec["apt-update"],
+ensure => installed,
+}
+
+package { "maven":
+require => Exec["apt-update"],
+ensure => installed,
+}
+

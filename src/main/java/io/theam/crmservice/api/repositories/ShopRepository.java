@@ -5,8 +5,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import io.theam.crmservice.api.entities.Shop;
 
+@Transactional(readOnly = true)
 public interface ShopRepository extends JpaRepository<Shop, Long>{
 
-	@Transactional(readOnly = true)
 	Shop findByShopName(String shopName);
 }

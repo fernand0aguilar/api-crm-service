@@ -1,3 +1,13 @@
+# ```
+# TODO ->
+#
+# install jdk8
+#
+# mysql script:
+# change password to root
+# create db
+# ```
+
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 

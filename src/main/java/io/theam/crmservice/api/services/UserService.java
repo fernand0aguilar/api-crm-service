@@ -44,4 +44,5 @@ public interface UserService {
 	 * @return List<User>
 	 */
 	List<User> searchAll();
+
 }
