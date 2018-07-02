@@ -36,8 +36,7 @@ public class AuthenticationController {
 	private static final Logger log = LoggerFactory.getLogger(AuthenticationController.class);
 	private static final String TOKEN_HEADER = "Authorization";
 	private static final String BEARER_PREFIX = "Bearer ";
-
-	@Autowired
+	
 	private AuthenticationManager authenticationManager;
 
 	@Autowired
@@ -46,6 +45,7 @@ public class AuthenticationController {
 	@Autowired
 	private UserDetailsService userDetailsService;
 
+	
 	/**
 	 * Generates and return a new Token
 	 * 
