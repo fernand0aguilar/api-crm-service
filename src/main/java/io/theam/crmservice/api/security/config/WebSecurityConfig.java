@@ -3,6 +3,7 @@ package io.theam.crmservice.api.security.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -43,15 +44,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public JwtAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
 		return new JwtAuthenticationTokenFilter();
 	}
-
+	
+	@Bean
+	public AuthenticationManager customAuthenticationManager() throws Exception {
+	  return authenticationManager();
+	}
+	
 	@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.csrf().disable().exceptionHandling()
 				.authenticationEntryPoint(unauthorizedHandler)
 				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and().authorizeRequests().antMatchers(
-						"/auth/**", "/api/register-shop", "/api-docs",
-						"/swagger-resources/**", "/configuration/security", "/swagger-ui.html", "/webjars/**")
+				.and().authorizeRequests().antMatchers("/auth/**", "/api/create-shop", "/configuration/security")
+				
 				.permitAll().anyRequest().authenticated();
 		
 		httpSecurity.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);

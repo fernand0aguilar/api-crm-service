@@ -4,6 +4,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 
+import javax.management.relation.Role;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -22,25 +23,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.util.Streamable;
 
 import io.theam.crmservice.api.dtos.UserDto;
-import io.theam.crmservice.api.entities.Shop;
 import io.theam.crmservice.api.entities.User;
 import io.theam.crmservice.api.enums.ProfileEnum;
-import io.theam.crmservice.api.repositories.UserRepository;
 import io.theam.crmservice.api.response.Response;
 import io.theam.crmservice.api.security.utils.JwtTokenUtil;
 
 import io.theam.crmservice.api.services.UserService;
 import io.theam.crmservice.api.utils.PasswordUtils;
-
-//TODO -> picture
 
 @RestController
 @RequestMapping("/api/users")
@@ -55,21 +47,24 @@ public class UserController {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 	
+	
 	public UserController() {
 		
 	}
 	
 	@PostMapping("/create")
-	public ResponseEntity<Response<UserDto>> create(HttpServletRequest request, @Valid @RequestBody UserDto userDto,
-		BindingResult result) throws NoSuchAlgorithmException {	
+	public ResponseEntity<Response<UserDto>> create (HttpServletRequest request, 
+			@Valid @RequestBody UserDto userDto, BindingResult result) 
+			throws NoSuchAlgorithmException {
+		
 		log.info("Registering new User: {}", userDto.toString());
 		Response<UserDto> response = new Response<UserDto>();
 		
 		validateExistingData(userDto, result);
 		User user = this.convertDtoToUser(userDto, result);
 		
-		String parentUsername = jwtTokenUtil.getUserfromRequest(request);
-		user.setParent(parentUsername);
+		String parentEmail = jwtTokenUtil.getUserFromRequest(request);
+		user.setParentEmail(parentEmail);
 
 		if(result.hasErrors()) {
 			log.error("Error validating New User Data: {}", result.getAllErrors());
@@ -79,19 +74,20 @@ public class UserController {
 
 		this.userService.persist(user);
 		
-		//TODO -> finish this persistence to return something valid
-		return null; 
+		response.setData(this.convertUserDto(user));
+		return ResponseEntity.ok(response);	
 	}
 	
-
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Response<String>> delete(@PathVariable("id") Long id) {	
+	public ResponseEntity<Response<String>> delete (@PathVariable("id") Long id) {
 		
+		log.info("Deleting User: {}", id);
+
 		Response<String> response = new Response<String>();
 		Optional<User> user = this.userService.searchById(id);
 		
 		if (!user.isPresent()) {
-			log.info("Error on removing because User ID: {} is invalid.", id);
+			log.error("Error on removing because User ID: {} is invalid.", id);
 			response.getErrors().add("Error while removing User. None was found for the id " + id);
 			return ResponseEntity.badRequest().body(response);
 		}
@@ -100,26 +96,54 @@ public class UserController {
 		return ResponseEntity.ok(new Response<String>());
 	}
 	
-	
 	@GetMapping("/list-all")
 	public List<User> listAll() {
 		log.info("Searching All Users: ");
+		//TODO -> fix this function
 		return this.userService.searchAll();
 	}
 	
 	@GetMapping("/list/{id}")
-	public ResponseEntity<Response<UserDto>> listOne(@PathVariable("id") Long id,
-			@Valid @RequestBody UserDto userDto,
-		BindingResult result) throws NoSuchAlgorithmException {	
-		return null;
-		//return userService.searchById(id);
+	public ResponseEntity<Response<UserDto>> listOne (@PathVariable("id") Long id) 
+			throws NoSuchAlgorithmException {
 		
+		log.info("Searching for User: {}", id);
+
+		Response<UserDto> response = new Response<UserDto>();
+		Optional<User> user = this.userService.searchById(id);
+				
+		response.setData(this.convertUserDto(user.get()));
+		return ResponseEntity.ok(response);
 	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	@PutMapping("/change-role/{id}")
-	public ResponseEntity<Response<UserDto>> changeRole(@Valid @RequestBody UserDto userDto,
-		BindingResult result) throws NoSuchAlgorithmException {	return null; }
+	public ResponseEntity<Response<String>> changeRole (@PathVariable("id") Long id,
+			@Valid @RequestBody UserDto userDto, BindingResult result) 
+			throws NoSuchAlgorithmException {
+		
+		log.info("Changing role of user id: {}", id);
+
+		Response<String> response = new Response<String>();
+		Optional<User> user = this.userService.searchById(id);
+		
+		if (!user.isPresent()) {
+			log.error("Error on changing user-role because User ID: {} is not valid.", id);
+			response.getErrors().add("Error while changing user-role. None was found for the id " + id);
+			return ResponseEntity.badRequest().body(response);
+		}
+		
+		ProfileEnum role = user.get().getProfile();
+		
+		if(role == ProfileEnum.ROLE_ADMIN) {
+			user.get().setProfile(ProfileEnum.ROLE_USER);
+		}
+		else {
+			user.get().setProfile(ProfileEnum.ROLE_ADMIN);
+		}
+		
+		return ResponseEntity.ok(new Response<String>());
+	}
 		
 	
 	/**
@@ -132,8 +156,9 @@ public class UserController {
 	 * @throws NoSuchAlgorithmException
 	 */
 	@PutMapping(value = "/update/{id}")
-	public ResponseEntity<Response<UserDto>> update(@PathVariable("id") Long id,
-			@Valid @RequestBody UserDto userDto, BindingResult result) throws NoSuchAlgorithmException{
+	public ResponseEntity<Response<UserDto>> update (@PathVariable("id") Long id,
+			@Valid @RequestBody UserDto userDto, BindingResult result) 
+			throws NoSuchAlgorithmException{
 		
 		log.info("Updating user: {}", userDto.toString());
 		Response<UserDto> response = new Response<UserDto>();
@@ -208,7 +233,6 @@ public class UserController {
 		userDto.setName(user.getName());
 		userDto.setSurname(user.getSurname());
 		userDto.setEmail(user.getEmail());
-		//TODO -> photo
 		
 		return userDto;
 	}

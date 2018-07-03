@@ -4,7 +4,6 @@ package io.theam.crmservice.api.dtos;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.web.multipart.MultipartFile;
 
 import io.theam.crmservice.api.enums.ProfileEnum;
 
@@ -16,7 +15,6 @@ public class UserDto {
 	private String email;
 	private String password;
 	private ProfileEnum profile;
-	private MultipartFile picture;
 		
 	public UserDto() {
 	}
@@ -73,17 +71,9 @@ public class UserDto {
 		this.profile = profile;
 	}
 
-	public MultipartFile getPicture() {
-		return picture;
-	}
-
-	public void setPicture(MultipartFile picture) {
-		this.picture = picture;
-	}
-
 	@Override
 	public String toString() {
 		return "UserDto [id=" + id + ", name=" + name + ", surname=" + surname + ", email=" + email + ", password="
-				+ password + ", profile=" + profile + ", picture=" + picture + "]";
+				+ password + ", profile=" + profile + "]";
 	}
 }

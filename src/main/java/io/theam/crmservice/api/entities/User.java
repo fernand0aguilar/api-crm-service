@@ -30,7 +30,6 @@ public class User implements Serializable{
 	private static final long serialVersionUID = -3589435415041349797L;
 	
 	private Long id;
-	    
 	private String name;
 	private String surname;
 	private String email;
@@ -40,6 +39,9 @@ public class User implements Serializable{
 	private Date updateDate;
 	private Shop shop;
 	private String parentEmail;
+	
+//	INSERT INTO users (name, surname, email, password, profile, create_date, update_date, parent_email)
+//	VALUES ('test', 'test', 'admin@admin.com', '123456', 'ROLE_ADMIN', '2010-11-11', '201-11-12', "father@user.com");
 
 	public User() {
 		
@@ -120,11 +122,11 @@ public class User implements Serializable{
 		this.shop = shop;
 	}
 	
-	public String getParent() {
+	public String getParentEmail() {
 		return parentEmail;
 	}
-	public void setParent(String email) {
-		this.parentEmail = email;
+	public void setParentEmail(String parentEmail) {
+		this.parentEmail = parentEmail;
 	}
 	
 	@PreUpdate

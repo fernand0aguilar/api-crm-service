@@ -53,8 +53,10 @@ public class RegisterNewShopController {
 	 *
 	 */
 	@PostMapping
-	public ResponseEntity<Response<RegisterNewShopDto>> register(@Valid @RequestBody RegisterNewShopDto registerNewShopDto,
+	public ResponseEntity<Response<RegisterNewShopDto>> register (
+		@Valid @RequestBody RegisterNewShopDto registerNewShopDto,
 		BindingResult result) throws NoSuchAlgorithmException {
+		
 		log.info("Registring Shop: {}", registerNewShopDto.toString());
 		Response<RegisterNewShopDto> response = new Response<RegisterNewShopDto>();
 		

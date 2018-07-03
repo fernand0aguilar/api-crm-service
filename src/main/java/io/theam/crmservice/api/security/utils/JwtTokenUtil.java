@@ -155,7 +155,7 @@ public class JwtTokenUtil {
 				.signWith(SignatureAlgorithm.HS512, secret).compact();
 	}
 
-	public String getUserfromRequest(HttpServletRequest request) {
+	public String getUserFromRequest(HttpServletRequest request) {
 		String token = request.getHeader("Authorization");
         
         if (token != null && token.startsWith("Bearer ")) {
