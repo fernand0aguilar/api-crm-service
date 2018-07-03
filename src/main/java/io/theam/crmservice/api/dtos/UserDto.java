@@ -1,11 +1,12 @@
 package io.theam.crmservice.api.dtos;
 
 
-import java.util.Optional;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.web.multipart.MultipartFile;
+
+import io.theam.crmservice.api.enums.ProfileEnum;
 
 
 public class UserDto {
@@ -13,11 +14,10 @@ public class UserDto {
 	private String name;
 	private String surname;
 	private String email;
-	private Optional<String> password;
-	private Long father_id;
-	//TODO -> Insert picture field
-	//TODO -> Create father logic
-	
+	private String password;
+	private ProfileEnum profile;
+	private MultipartFile picture;
+		
 	public UserDto() {
 	}
 	
@@ -58,24 +58,32 @@ public class UserDto {
 		this.email = email;
 	}
 	
-	public Optional<String> getPassword() {
+	public String getPassword() {
 		return password;
 	}
-	public void setPassword(Optional<String> password) {
+	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public ProfileEnum getProfile() {
+		return profile;
+	}
+
+	public void setProfile(ProfileEnum profile) {
+		this.profile = profile;
+	}
+
+	public MultipartFile getPicture() {
+		return picture;
+	}
+
+	public void setPicture(MultipartFile picture) {
+		this.picture = picture;
 	}
 
 	@Override
 	public String toString() {
 		return "UserDto [id=" + id + ", name=" + name + ", surname=" + surname + ", email=" + email + ", password="
-				+ password + "]";
-	}
-
-	public Long getFather_id() {
-		return father_id;
-	}
-
-	public void setFather_id(Long father_id) {
-		this.father_id = father_id;
+				+ password + ", profile=" + profile + ", picture=" + picture + "]";
 	}
 }

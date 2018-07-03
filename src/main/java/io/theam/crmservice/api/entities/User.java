@@ -2,7 +2,6 @@ package io.theam.crmservice.api.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,12 +12,16 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import io.theam.crmservice.api.enums.ProfileEnum;
+import io.theam.crmservice.api.security.JwtUser;
+import io.theam.crmservice.api.security.utils.JwtTokenUtil;
+
 
 @Entity
 @Table (name = "users")
@@ -32,18 +35,11 @@ public class User implements Serializable{
 	private String surname;
 	private String email;
 	private String password;
-	
-	// private TODO --> FILE UPLOAD 
-	// https://javatutorial.net/java-file-upload-rest-service
-	
 	private ProfileEnum profile;
 	private Date createDate;
 	private Date updateDate;
 	private Shop shop;
-	
-	private User parent;	
-    private List<User> children;
-	
+	private String parentEmail;
 
 	public User() {
 		
@@ -124,27 +120,16 @@ public class User implements Serializable{
 		this.shop = shop;
 	}
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	public User getParent() {
-		return parent;
+	public String getParent() {
+		return parentEmail;
 	}
-	public void setParent(User parent) {
-		this.parent = parent;
-	}
-	
-	@OneToMany(mappedBy="parent")
-	public List<User> getChildren() {
-		return children;
-	}
-	public void setChildren(List<User> children) {
-		this.children = children;
+	public void setParent(String email) {
+		this.parentEmail = email;
 	}
 	
 	@PreUpdate
 	public void preUpdate() {
 		updateDate = new Date();
-		// father = user who updated
-		//TODO -> Insert ID of who updated
 	}
 	
 	@PrePersist
@@ -152,8 +137,6 @@ public class User implements Serializable{
 		final Date currently = new Date();
 		createDate = currently;
 		updateDate = currently;
-		// father = user who created
-		//TODO -> Insert ID of who created
 	}
 
 	@Override
@@ -162,6 +145,8 @@ public class User implements Serializable{
 				+ ", email=" + email + ", password=" + password 
 				+ ", profile=" + profile + ", createDate=" + createDate 
 				+ ", updateDate=" + updateDate + ", shop=" + shop 
-				+ ", parent=" + parent + "]";
+				+ ", parent=" + parentEmail + "]";
 	}
+
+
 }

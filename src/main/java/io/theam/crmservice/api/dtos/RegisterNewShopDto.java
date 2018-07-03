@@ -13,7 +13,7 @@ public class RegisterNewShopDto {
 	private String surname;
 	private String password;
 	private String email;
-	//TODO -> Insert picture field
+		
 	private String shopName;
 
 	public RegisterNewShopDto() {

@@ -45,4 +45,10 @@ public interface UserService {
 	 */
 	List<User> searchAll();
 
+	/**
+	 * Delete an user in the database
+	 * 
+	 * @param id
+	 */
+	void remove(Long id);
 }

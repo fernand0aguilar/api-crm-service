@@ -7,8 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
+	
 import io.theam.crmservice.api.entities.User;
 import io.theam.crmservice.api.repositories.UserRepository;
 import io.theam.crmservice.api.services.UserService;
@@ -45,8 +44,9 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findAll();
 	}
 
-	public Optional<MultipartFile> storePhoto(MultipartFile file) {
-		// TODO Auto-generated method stub
-		return Optional.of(file);
+	public void remove(Long id) {
+		log.info("Removing the user with ID {}", id);
+		this.userRepository.deleteById(id);		
 	}
+
 }
