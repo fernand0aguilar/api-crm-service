@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -151,6 +153,16 @@ public class JwtTokenUtil {
 	private String generatesToken(Map<String, Object> claims) {
 		return Jwts.builder().setClaims(claims).setExpiration(generatesExpirationDate())
 				.signWith(SignatureAlgorithm.HS512, secret).compact();
+	}
+
+	public String getUserfromRequest(HttpServletRequest request) {
+		String token = request.getHeader("Authorization");
+        
+        if (token != null && token.startsWith("Bearer ")) {
+        	token = token.substring(7);
+        }
+        String username = this.getUsernameFromToken(token);
+        return username;
 	}
 
 }

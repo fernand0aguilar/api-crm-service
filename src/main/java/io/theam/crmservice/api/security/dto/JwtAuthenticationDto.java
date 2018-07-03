@@ -12,7 +12,7 @@ public class JwtAuthenticationDto {
 	}
 
 	@NotEmpty(message = "Email Cannot Be Empty")
-	@Email(message = "Invalid Email .")
+	@Email(message = "Email not valid")
 	public String getEmail() {
 		return email;
 	}
@@ -34,5 +34,4 @@ public class JwtAuthenticationDto {
 	public String toString() {
 		return "JwtAuthenticationRequestDto [email=" + email + ", password=" + password + "]";
 	}
-
 }
