@@ -117,7 +117,7 @@ public class UserController {
 	}
 	
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	@PutMapping("/change-role/{id}")
+	@PutMapping("/change-profile/{id}")
 	public ResponseEntity<Response<String>> changeRole (@PathVariable("id") Long id,
 			@Valid @RequestBody UserDto userDto, BindingResult result) 
 			throws NoSuchAlgorithmException {
@@ -137,12 +137,13 @@ public class UserController {
 		
 		if(role == ProfileEnum.ROLE_ADMIN) {
 			user.get().setProfile(ProfileEnum.ROLE_USER);
+			response.setData("Admin to User");
 		}
-		else {
+		if(role == ProfileEnum.ROLE_USER){
 			user.get().setProfile(ProfileEnum.ROLE_ADMIN);
+			response.setData("User to Admin");
 		}
-		
-		return ResponseEntity.ok(new Response<String>());
+		return ResponseEntity.ok(response);
 	}
 		
 	
@@ -233,12 +234,11 @@ public class UserController {
 		userDto.setName(user.getName());
 		userDto.setSurname(user.getSurname());
 		userDto.setEmail(user.getEmail());
-		
+		userDto.setProfile(user.getProfile());
 		return userDto;
 	}
 	
-	private User convertDtoToUser(@Valid UserDto userDto, BindingResult result) 
-			throws NoSuchAlgorithmException {
+	private User convertDtoToUser(@Valid UserDto userDto, BindingResult result) throws NoSuchAlgorithmException {
 
 			User user = new User();
 			user.setName(userDto.getName());
@@ -246,6 +246,7 @@ public class UserController {
 			user.setEmail(userDto.getEmail());
 			user.setProfile(userDto.getProfile());
 			user.setPassword(PasswordUtils.generatesBCrypt(userDto.getPassword()));
+			user.setProfile(ProfileEnum.ROLE_USER);
 			
 			return user;
 		}
