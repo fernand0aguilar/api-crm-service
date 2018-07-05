@@ -16,11 +16,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import io.theam.crmservice.api.enums.ProfileEnum;
-import io.theam.crmservice.api.security.JwtUser;
-import io.theam.crmservice.api.security.utils.JwtTokenUtil;
 
 
 @Entity
@@ -40,8 +36,6 @@ public class User implements Serializable{
 	private Shop shop;
 	private String parentEmail;
 	
-//	INSERT INTO users (name, surname, email, password, profile, create_date, update_date, parent_email)
-//	VALUES ('test', 'test', 'admin@admin.com', '123456', 'ROLE_ADMIN', '2010-11-11', '201-11-12', "father@user.com");
 
 	public User() {
 		

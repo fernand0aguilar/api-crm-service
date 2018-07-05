@@ -16,9 +16,6 @@ import io.theam.crmservice.api.services.FileStorageService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/pictures")
