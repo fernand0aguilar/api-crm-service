@@ -44,19 +44,4 @@ vagrant up
 ***
 
 ### Usage:
-Access the endpoints on the URL: http://localhost:8080
-
-### Endpoints
-+ **/auth** -- POST - email and password for Authentication
-+ **/api**
-	+ **/create-shop** -- POST - create new shop
-	* **/users/** - Access to user Controller
-		+ /create -- POST
-		+ /delete/{id} -- DELETE
-		+ /list-all -- GET
-		+ /list/{id}   -- GET
-		+ /change-profile/{id} -- PUT
-		+ /update/{id} -- PUT
-	+ **/pictures**
-		+ /uploadFile -- POST
-		+ /downloadFile/{fileName} -- GET
+Check the endpoints on the URL: **/swagger-ui.html**
